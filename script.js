@@ -1,17 +1,91 @@
 const sudoku = document.getElementById('sudoku');
 const cells = [];
 
-const initialGrid = [
-    [5, 3, 0, 0, 7, 0, 0, 0, 0],
-    [6, 0, 0, 1, 9, 5, 0, 0, 0],
-    [0, 9, 8, 0, 0, 0, 0, 6, 0],
-    [8, 0, 0, 0, 6, 0, 0, 0, 3],
-    [4, 0, 0, 8, 0, 3, 0, 0, 1],
-    [7, 0, 0, 0, 2, 0, 0, 0, 6],
-    [0, 6, 0, 0, 0, 0, 2, 8, 0],
-    [0, 0, 0, 4, 1, 9, 0, 0, 5],
-    [0, 0, 0, 0, 8, 0, 0, 7, 9]
-];
+function shuffleArray(array) {
+    const shuffled = [...array];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    return shuffled;
+}
+
+function isValidPlacement(grid, row, col, value) {
+    for (let i = 0; i < 9; i++) {
+        if (grid[row][i] === value || grid[i][col] === value) {
+            return false;
+        }
+    }
+
+    const boxRow = Math.floor(row / 3) * 3;
+    const boxCol = Math.floor(col / 3) * 3;
+    for (let r = boxRow; r < boxRow + 3; r++) {
+        for (let c = boxCol; c < boxCol + 3; c++) {
+            if (grid[r][c] === value) {
+                return false;
+            }
+        }
+    }
+
+    return true;
+}
+
+function solveGrid(grid) {
+    for (let row = 0; row < 9; row++) {
+        for (let col = 0; col < 9; col++) {
+            if (grid[row][col] === 0) {
+                for (const value of shuffleArray([1, 2, 3, 4, 5, 6, 7, 8, 9])) {
+                    if (isValidPlacement(grid, row, col, value)) {
+                        grid[row][col] = value;
+                        if (solveGrid(grid)) {
+                            return true;
+                        }
+                        grid[row][col] = 0;
+                    }
+                }
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
+function createSolvedGrid() {
+    const grid = Array.from({ length: 9 }, () => Array(9).fill(0));
+
+    for (let box = 0; box < 3; box++) {
+        const values = shuffleArray([1, 2, 3, 4, 5, 6, 7, 8, 9]);
+        let index = 0;
+        for (let r = 0; r < 3; r++) {
+            for (let c = 0; c < 3; c++) {
+                grid[box * 3 + r][box * 3 + c] = values[index++];
+            }
+        }
+    }
+
+    if (!solveGrid(grid)) {
+        return createSolvedGrid();
+    }
+
+    return grid;
+}
+
+function createRandomPuzzle() {
+    const solvedGrid = createSolvedGrid();
+    const puzzle = solvedGrid.map((row) => [...row]);
+
+    const positions = shuffleArray([...Array(81).keys()]);
+    const cellsToRemove = 40 + Math.floor(Math.random() * 10);
+
+    for (let i = 0; i < cellsToRemove; i++) {
+        const index = positions[i];
+        const row = Math.floor(index / 9);
+        const col = index % 9;
+        puzzle[row][col] = 0;
+    }
+
+    return puzzle;
+}
 
 function renderSudoku(grid) {
     sudoku.innerHTML = '';
@@ -59,7 +133,7 @@ function getGrid() {
 }
 
 function hasDuplicates(arr) {
-    const nums = arr.filter(n => n !== 0);
+    const nums = arr.filter((n) => n !== 0);
     return new Set(nums).size !== nums.length;
 }
 
@@ -101,10 +175,10 @@ function checkSudoku() {
 }
 
 function resetSudoku() {
-    renderSudoku(initialGrid);
+    renderSudoku(createRandomPuzzle());
 }
 
-renderSudoku(initialGrid);
+renderSudoku(createRandomPuzzle());
 
 document.getElementById('check').addEventListener('click', checkSudoku);
 document.getElementById('reset').addEventListener('click', resetSudoku);
