@@ -9,7 +9,6 @@ Developed as part of a Full Stack Development challenge (+250 XP 💪).
 - 🎲 Random puzzle generation with 20 pre-filled clues
 - 🔒 Locked clues (greyed out, uneditable)
 - ✅ Validation logic (checks rows, columns, and 3×3 boxes)
-- 🎨 Dark theme styling for modern look
 - 📏 Proper Sudoku borders for 3×3 sub-grids
 - 🔄 Reset button to generate a new puzzle
 - 📱 Responsive design for different screen sizes
