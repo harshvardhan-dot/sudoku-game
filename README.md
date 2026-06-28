@@ -15,7 +15,7 @@ Developed as part of a Full Stack Development challenge (+250 XP 💪).
 
 ---
 
-## 🚀 Deployment
+## 🚀Deployment
 Play the game live here:  
 - **Netlify** → https://sudoku-gameharsh.netlify.app/
 
