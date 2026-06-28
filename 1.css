@@ -1,0 +1,127 @@
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: #f5f5f5;
+    
+    text-align: center;
+    margin: 0;
+    padding: 20px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+h1 {
+    color: #f5f5f5;
+    text-shadow: 2px 2px #000;
+    font-size: 48px;
+    margin-bottom: 10px;
+    letter-spacing: 3px;
+    font-weight: bold;
+}
+
+#sudoku {
+    display: grid;
+    grid-template-columns: repeat(9, 50px);
+    grid-template-rows: repeat(9, 50px);
+    border: 3px solid #4d3c3c14;
+    background: #1e1e1e;
+    
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4), 0 0 40px rgba(102, 126, 234, 0.3);
+    border-radius: 10px;
+    padding: 6px;
+}
+
+#sudoku input {
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    font-size: 22px;
+    border: 1px solid #444;
+    background-color: #2c2c2c;
+    
+    color: #0e7a98;
+    
+    box-sizing: border-box;
+    transition: all 0.2s ease;
+    font-weight: bold;
+}
+
+#sudoku input:hover {
+    background-color: #3c3c3c;
+    transform: scale(1.05);
+}
+
+#sudoku input:focus {
+    outline: none;
+    background-color: #942a2a;
+    box-shadow: inset 0 0 8px rgba(213, 171, 18, 0.5);
+    color: #dc1518;
+}
+
+
+#sudoku input:nth-child(3n) {
+    border-right: 3px solid #888;
+}
+
+
+#sudoku input:nth-child(n+19):nth-child(-n+27),
+#sudoku input:nth-child(n+46):nth-child(-n+54),
+#sudoku input:nth-child(n+73):nth-child(-n+81) {
+    border-bottom: 3px solid #888;
+}
+
+
+#sudoku input:nth-child(-n+9) {
+    border-top: 3px solid #888;
+}
+
+#sudoku input:nth-child(9n+1) {
+    border-left: 3px solid #888;
+}
+
+
+
+button {
+    margin: 15px 10px;
+    padding: 12px 30px;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+#check {
+    background-color: #28a745;
+    color: white;
+}
+
+#check:hover {
+    background-color: #9e0c33;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4);
+}
+
+#check:active {
+    transform: translateY(0);
+}
+
+#reset {
+    background-color: #dc3545;
+    color: white;
+}
+
+#reset:hover {
+    background-color: #ff6b6b;
+}
+
+#reset:active {
+    transform: translateY(0);
+}
